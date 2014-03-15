@@ -1,12 +1,12 @@
 Function 0 0 2
 
 iPush_1
-StackSet 3
+staticset1 3
 
 :while
 iPush_0
 CallNative wait 1 0
-StackGet 3
+staticget1 3
 JumpFalse @Label_main2
 Call @load_north_yankton
 Jump @Label_main3
@@ -128,7 +128,7 @@ iPush_1
 CallNative set_ambient_zone_list_state 3 0
 
 iPush_0
-StackSet 3
+staticset1 3
 
 Return 0 0
 
