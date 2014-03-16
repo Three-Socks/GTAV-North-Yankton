@@ -1,26 +1,113 @@
 Function 0 0 2
-
 iPush_1
-StackSet 3
+StaticSet1 2
+fPush 0.0453125
+StaticSet1 3
+iPush_0
+StaticSet1 4
+iPush_0
+StaticSet1 5
+iPush_0
+StaticSet1 6
+iPush_0
+StaticSet1 7
+iPush_0
+StaticSet1 8
+
+iPush_0
+StaticSet1 9
+iPush_0
+StaticSet1 10
+
+iPush_0
+StaticSet1 11
+
+PushString "NULL"
+StaticSet1 14
 
 :while
+iPush_1
+JumpFalse @Label_main3
 iPush_0
 CallNative wait 1 0
-StackGet 3
-JumpFalse @Label_main2
-Call @load_north_yankton
-Jump @Label_main3
+Call @Label_catch_load_button_press
 
-:Label_main3
-Jump @Label_main2
+:Label_main1
+StaticGet1 6
+JumpFalse @Label_main2
+Call @Label_draw_window
+Call @Label_draw_menu
+Call @Label_catch_updown_button_press
+Call @Label_catch_select_button_press
+Call @Label_action
 
 :Label_main2
 Jump @while
+
+:Label_main3
 Return 0 0
+
+:Label_action
+Function 12 0 2
+StaticGet1 7
+iPush_1
+JumpEq @Label_action1
+Jump @Label_action4
+
+:Label_action1
+StaticGet1 4
+Call @Label_north_yankton
+Jump @Label_action2
+
+:Label_action4
+StaticGet1 7
+iPush_2
+JumpEq @Label_action5
+Jump @Label_action2
+
+:Label_action5
+iPush_0
+StaticSet1 7
+Call @Label_hide_menu
+Jump @Label_action2
+
+:Label_action2
+Return 0 0
+
+:Label_north_yankton
+Function 14 1 3
+
+iPush_0
+StaticSet1 7
+
+getF 0
+Switch [0 @Label_north_yankton_1]:[1 @Label_north_yankton_2]:[2 @Label_north_yankton_3]
+Jump @Label_north_yankton_22
+
+:Label_north_yankton_1
+Call @load_north_yankton
+Jump @Label_north_yankton_22
+
+:Label_north_yankton_2
+Call @unload_north_yankton
+Jump @Label_north_yankton_22
+
+:Label_north_yankton_3
+Call @Label_hide_menu
+Jump @Label_north_yankton_22
+
+:Label_north_yankton_22
+Return 1 0
 
 :load_north_yankton
 Function 1 0 5
+
+StaticGet1 11
+Not
+JumpFalse @load_north_yankton_error
+
 Call @Label_8390_request_ipl
+iPush_1
 Call @Label_6238_request_grave_ipl
 
 iPush_6
@@ -127,9 +214,29 @@ iPush_1
 iPush_1
 CallNative set_ambient_zone_list_state 3 0
 
-iPush_0
-StackSet 3
+iPush_1
+StaticSet1 11
 
+PushString "STRING"
+CallNative unk_0x574EE85C 1 0
+PushString "North Yankton loaded!"
+CallNative unk_0x27A244D8 1 0
+iPush_0
+iPush_1
+CallNative unk_0x08F7AF78 2 1
+
+Jump @load_north_yankton_end
+
+:load_north_yankton_error
+PushString "STRING"
+CallNative unk_0x574EE85C 1 0
+PushString "North Yankton already loaded."
+CallNative unk_0x27A244D8 1 0
+iPush_0
+iPush_1
+CallNative unk_0x08F7AF78 2 1
+
+:load_north_yankton_end
 Return 0 0
 
 :Label_8390_request_ipl
@@ -203,3 +310,476 @@ CallNative request_ipl 1 0
 
 :Label_6625
 Return 1 0
+
+:unload_north_yankton
+Function 1 0 5
+iPush_0
+StaticSet1 11
+PushString "STRING"
+CallNative unk_0x574EE85C 1 0
+PushString "North Yankton unloaded!"
+CallNative unk_0x27A244D8 1 0
+iPush_0
+iPush_1
+CallNative unk_0x08F7AF78 2 1
+Return 0 0
+
+:Label_catch_select_button_press
+Function 11 0 2
+iPush_0
+CallNative set_cinematic_button_active 1 0
+iPush_0
+Push1 90
+CallNative disable_control_action 2 0
+iPush_0
+Push1 69
+CallNative disable_control_action 2 0
+iPush_0
+Push1 73
+CallNative disable_control_action 2 0
+iPush_2
+Push1 176
+CallNative unk_0x4E8E29E6 2 0
+iPush_2
+Push1 174
+CallNative unk_0x4E8E29E6 2 0
+iPush_2
+Push1 175
+CallNative unk_0x4E8E29E6 2 0
+iPush_2
+Push1 174
+CallNative is_control_just_released 2 1
+JumpFalse @Label_741
+iPush_-1
+PushString "SELECT"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+
+iPush_1
+StaticSet1 7
+Jump @Label_739
+
+:Label_741
+iPush_2
+Push1 175
+CallNative is_control_just_released 2 1
+JumpFalse @Label_739
+iPush_-1
+PushString "SELECT"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+
+iPush_2
+StaticSet1 7
+
+:Label_739
+Return 0 0
+
+:Label_catch_load_button_press
+Function 8 0 3
+StaticGet1 8
+Push1 25
+JumpGT @Label_catch_load3
+Jump @Label_catch_load4
+
+:Label_catch_load3
+StaticGet1 6
+JumpFalse @Label_catch_load2
+iPush_0
+StaticSet1 8
+Call @Label_hide_menu
+iPush_-1
+PushString "SELECT"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+Jump @Label_catch_load4
+
+:Label_catch_load2
+iPush_0
+StaticSet1 8
+iPush_1
+StaticSet1 6
+iPush_-1
+PushString "SELECT"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+Jump @Label_catch_load4
+
+:Label_catch_load4
+Call @Label_load_pressed
+Return 0 0
+
+:Label_hide_menu
+Function 61 0 2
+iPush_1
+CallNative set_cinematic_button_active 1 0
+iPush_0
+StaticSet1 6
+Return 0 0
+
+:Label_load_pressed
+Function 10 0 2
+CallNative is_pause_menu_active 0 1
+JumpFalse @Label_load_pressed_1
+Jump @Label_load_pressed_2
+
+:Label_load_pressed_1
+iPush_2
+Push1 179
+CallNative is_control_pressed 2 1
+JumpFalse @Label_load_pressed_2
+iPush_2
+Push1 175
+CallNative is_control_pressed 2 1
+JumpFalse @Label_load_pressed_2
+
+StaticGet1 8
+Add1 1
+StaticSet1 8
+Jump @Label_load_pressed_3
+
+:Label_load_pressed_2
+iPush_0
+StaticSet1 8
+
+:Label_load_pressed_3
+Return 0 0
+
+:Label_draw_window
+Function 7 0 9
+Push1 140
+pFrame1 2
+pFrame1 3
+pFrame1 4
+pFrame1 5
+CallNative get_hud_colour 5 0
+
+StaticGet1 5
+Add1 1
+setF 6
+
+fPush 0.03472222
+getF 6
+CallNative to_float 1 1
+fMult
+setF 7
+fPush 0.040625
+fPush 0.075
+fPush 0.225
+getF 7
+getF 2
+getF 3
+getF 4
+getF 5
+Call @Label_draw_rect
+fPush 0.040625
+fPush 0.040277
+fPush 0.225
+fPush 0.03472222
+iPush_0
+iPush_0
+iPush_0
+Push1 204
+Call @Label_draw_rect
+Return 0 0
+
+:Label_draw_rect
+Function 6 8 10
+getF 0
+getF 2
+fPush 0.5
+fMult
+fAdd
+getF 1
+getF 3
+fPush 0.5
+fMult
+fAdd
+getF 2
+getF 3
+getF 4
+getF 5
+getF 6
+getF 7
+CallNative draw_rect 8 0
+Return 8 0
+
+:Label_catch_updown_button_press
+Function 8 0 6
+iPush_0
+Push1 46
+CallNative disable_control_action 2 0
+iPush_2
+Push1 161
+CallNative unk_0x4E8E29E6 2 0
+iPush_2
+Push1 162
+CallNative unk_0x4E8E29E6 2 0
+iPush_2
+Push1 174
+CallNative unk_0x4E8E29E6 2 0
+iPush_2
+Push1 161
+CallNative is_control_just_pressed 2 1
+JumpFalse @Label_else_up
+iPush_-1
+PushString "NAV_UP_DOWN"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+StaticGet1 4
+StaticGet1 5
+JumpGE @Label_1341
+StaticGet1 4
+Add1 1
+StaticSet1 4
+Jump @Label_1342
+
+:Label_1341
+iPush_0
+StaticSet1 4
+
+:Label_1342
+Jump @Label_catch_updown_button_press_END
+
+:Label_else_up
+iPush_2
+Push1 162
+CallNative is_control_just_pressed 2 1
+JumpFalse @Label_1344
+iPush_-1
+PushString "NAV_UP_DOWN"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+StaticGet1 4
+iPush_0
+JumpLE @Label_1345
+StaticGet1 4
+iPush_1
+Sub
+StaticSet1 4
+Jump @Label_1346
+
+:Label_1345
+StaticGet1 5
+StaticSet1 4
+
+:Label_1344
+Jump @Label_catch_updown_button_press_END
+
+:Label_1346
+Jump @Label_catch_updown_button_press_END
+
+:Label_catch_updown_button_press_END
+Return 0 0
+
+:Label_draw_menu
+Function 5 0 12
+
+Call @Label_get_menu_count
+StaticSet1 5
+
+iPush_0
+iPush_0
+Call @Label_set_up_draw
+PushString "North Yankton r1"
+StaticGet1 3
+fPush 0.04444443
+Call @Label_draw_string
+
+iPush_0
+setF 3
+
+fPush 0.04305555
+setF 4
+
+getF 4
+setF 5
+
+fPush 0.04027778
+setF 6
+
+getF 6
+setF 7
+
+fPush 0.03472222
+setF 8
+
+StaticGet1 5
+Add1 1
+setF 9
+
+iPush_0
+setF 10
+
+:Label_draw_menu_LOOP
+getF 3
+getF 9
+JumpGE @Label_draw_menu_END
+getF 5
+getF 8
+fAdd
+setF 5
+getF 7
+getF 8
+fAdd
+setF 7
+
+:Label_draw_menu_1
+getF 3
+StaticGet1 4
+JumpEq @Label_draw_menu_2
+iPush_0
+setF 10
+Jump @Label_draw_menu_3
+
+:Label_draw_menu_2
+fPush 0.040625
+getF 7
+fPush 0.225
+getF 8
+Push1 240
+Push1 240
+Push1 240
+Push1 255
+Call @Label_draw_rect
+iPush_1
+setF 10
+
+:Label_draw_menu_3
+getF 10
+iPush_0
+Call @Label_set_up_draw
+getF 3
+Call @Label_get_menu
+StaticGet1 3
+getF 5
+Call @Label_draw_string
+
+getF 3
+Add1 1
+setF 3
+Jump @Label_draw_menu_LOOP
+
+:Label_draw_menu_END
+Return 0 0
+
+:Label_draw_string
+Function 25 3 3
+PushString "STRING"
+CallNative unk_0x3E35563E 1 0
+getF 0
+CallNative unk_0x27A244D8 1 0
+getF 1
+getF 2
+CallNative unk_0x6F8350CE 2 0
+Return 3 0
+
+:Label_set_up_draw
+Function 1 2 3
+iPush_0
+CallNative set_text_font 1 0
+fPush_0.0
+fPush 0.35
+CallNative set_text_scale 2 0
+
+:Label_set_up_draw3
+getF 0
+JumpFalse @Label_set_up_draw_2
+Push3 0, 0, 0
+Push1 255
+CallNative set_text_colour 4 0
+Jump @Label_set_up_draw_1
+
+:Label_set_up_draw_2
+Push3 255, 255, 255
+Push1 255
+CallNative set_text_colour 4 0
+
+:Label_set_up_draw_1
+getF 1
+JumpFalse @Label_set_up_draw_4
+fPush_0.0
+StaticGet1 3
+fPush 0.2040
+fAdd
+CallNative set_text_wrap 2 0
+iPush_1
+CallNative set_text_right_justify 1 0
+Jump @Label_set_up_draw_5
+
+:Label_set_up_draw_4
+fPush_0.0
+fPush_1.0
+CallNative set_text_wrap 2 0
+iPush_0
+CallNative set_text_right_justify 1 0
+Jump @Label_set_up_draw_5
+
+:Label_set_up_draw_5
+iPush_0
+CallNative set_text_centre 1 0
+iPush_0
+iPush_0
+iPush_0
+iPush_0
+iPush_0
+CallNative set_text_dropshadow 5 0
+iPush_0
+iPush_0
+iPush_0
+iPush_0
+iPush_0
+CallNative set_text_edge 5 0
+Return 2 0
+
+:Label_get_menu_count
+Function 21 0 3
+StaticGet1 9
+Switch [0 @Label_get_menu_count_1]
+Jump @Label_get_menu_count_6
+
+:Label_get_menu_count_1
+Push1 2
+Return 0 1
+
+:Label_get_menu_count_6
+iPush_0
+Return 0 1
+
+
+:Label_get_menu
+Function 19 1 3
+StaticGet1 9
+Switch [0 @Label_get_menu_1]
+Jump @Label_get_menu_6
+
+:Label_get_menu_1
+getF 0
+Call @Label_get_menu_main
+Return 1 1
+
+:Label_get_menu_6
+PushString ""
+Return 1 1
+
+:Label_get_menu_main
+Function 20 1 3
+getF 0
+Switch [0 @Label_get_menu_main_1]:[1 @Label_get_menu_main_2]:[2 @Label_get_menu_main_3]
+Jump @Label_get_menu_main_22
+
+:Label_get_menu_main_1
+PushString "Load"
+Return 1 1
+
+:Label_get_menu_main_2
+PushString "Unload"
+Return 1 1
+
+:Label_get_menu_main_3
+PushString "Exit"
+Return 1 1
+
+:Label_get_menu_main_22
+PushString ""
+Return 1 1
