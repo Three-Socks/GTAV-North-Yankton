@@ -649,7 +649,7 @@ Push1 179
 CallNative is_control_pressed 2 1
 JumpFalse @Label_load_pressed_2
 iPush_2
-Push1 175
+Push1 183
 CallNative is_control_pressed 2 1
 JumpFalse @Label_load_pressed_2
 
@@ -801,7 +801,7 @@ StaticSet1 5
 iPush_0
 iPush_0
 Call @Label_set_up_draw
-PushString "North Yankton r1"
+PushString "North Yankton r2"
 StaticGet1 3
 fPush 0.04444443
 Call @Label_draw_string
