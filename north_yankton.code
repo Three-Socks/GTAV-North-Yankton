@@ -110,8 +110,53 @@ Call @Label_8390_request_ipl
 iPush_1
 Call @Label_6238_request_grave_ipl
 
-iPush_6
-Push1 15
+fPush 5526.24
+fPush -5137.23
+fPush 61.78925
+fPush 3679.327
+fPush -4973.879
+fPush 125.0828
+fPush 192
+iPush_0
+iPush_1
+iPush_1
+CallNative set_roads_in_angled_area 10 0
+fPush 3691.211
+fPush -4941.24
+fPush 94.59368
+fPush 3511.115
+fPush -4869.191
+fPush 126.7621
+fPush 16
+iPush_0
+iPush_1
+iPush_1
+CallNative set_roads_in_angled_area 10 0
+fPush 3510.004
+fPush -4865.81
+fPush 94.69557
+fPush 3204.424
+fPush -4833.817
+fPush 126.8152
+fPush 16
+iPush_0
+iPush_1
+iPush_1
+CallNative set_roads_in_angled_area 10 0
+fPush 3186.534
+fPush -4832.798
+fPush 109.8148
+fPush 3202.187
+fPush -4833.993
+fPush 114.815
+fPush 16
+iPush_0
+iPush_1
+iPush_1
+CallNative set_roads_in_angled_area 10 0
+
+iPush_0
+iPush_0
 iPush_0
 CallNative set_clock_time 3 0
 PushString "OVERCAST"
@@ -313,6 +358,125 @@ Return 1 0
 
 :unload_north_yankton
 Function 1 0 5
+
+Call @Label_531_remove_ipl
+fPush 5526.24
+fPush -5137.23
+fPush 61.78925
+fPush 3679.327
+fPush -4973.879
+fPush 125.0828
+fPush 192
+iPush_0
+iPush_0
+iPush_1
+CallNative set_roads_in_angled_area 10 0
+fPush 3691.211
+fPush -4941.24
+fPush 94.59368
+fPush 3511.115
+fPush -4869.191
+fPush 126.7621
+fPush 16
+iPush_0
+iPush_0
+iPush_1
+CallNative set_roads_in_angled_area 10 0
+fPush 3510.004
+fPush -4865.81
+fPush 94.69557
+fPush 3204.424
+fPush -4833.817
+fPush 126.8152
+fPush 16
+iPush_0
+iPush_0
+iPush_1
+CallNative set_roads_in_angled_area 10 0
+fPush 3186.534
+fPush -4832.798
+fPush 109.8148
+fPush 3202.187
+fPush -4833.993
+fPush 114.815
+fPush 16
+iPush_0
+iPush_0
+iPush_1
+CallNative set_roads_in_angled_area 10 0
+CallNative clear_timecycle_modifier 0 0
+CallNative unk_0x6776720A 0 0
+
+iPush_1
+CallNative set_random_trains 1 0
+iPush_0
+CallNative unk_0xD6A3B458 1 0
+iPush_0
+CallNative unk_0x02F5F1D1 1 0
+PushString "PrLog"
+CallNative unk_0x8EC68304 1 1
+setF 4
+getF 4
+iPush_0
+CallNative set_zone_enabled 2 0
+iPush_1
+iPush_1
+CallNative unk_0x0B710A51 2 0
+iPush_2
+iPush_1
+CallNative unk_0x0B710A51 2 0
+iPush_3
+iPush_1
+CallNative unk_0x0B710A51 2 0
+iPush_4
+iPush_1
+CallNative unk_0x0B710A51 2 0
+iPush_5
+iPush_1
+CallNative unk_0x0B710A51 2 0
+iPush_5
+CallNative set_max_wanted_level 1 0
+iPush_1
+CallNative set_create_random_cops 1 0
+fPush_1.0
+CallNative set_wanted_level_multiplier 1 0
+Push GetHash("asea2")
+iPush_0
+CallNative set_vehicle_model_is_suppressed 2 0
+Push GetHash("mesa2")
+iPush_0
+CallNative set_vehicle_model_is_suppressed 2 0
+Push GetHash("taxi")
+iPush_0
+CallNative set_vehicle_model_is_suppressed 2 0
+
+PushString "EXTRASUNNY"
+CallNative set_weather_type_now_persist 1 0
+CallNative clear_weather_type_persist 0 0
+CallNative unk_0x2D7787BC 0 0
+
+PushString "prologue"
+iPush_0
+CallNative unk_0x403CD434 2 0
+
+iPush_6
+Push1 15
+iPush_0
+CallNative set_clock_time 3 0
+PushString "OVERCAST"
+CallNative set_weather_type_now 1 0
+
+iPush_1
+CallNative unk_0x52E054CE 1 0
+PushString "ZL_YANKTON_ZONE_KILL_LIST"
+iPush_1
+iPush_1
+CallNative set_ambient_zone_list_state 3 0
+PushString "ZONE_LIST_YANKTON"
+iPush_0
+iPush_1
+CallNative set_ambient_zone_list_state 3 0
+
 iPush_0
 StaticSet1 11
 PushString "STRING"
@@ -322,6 +486,62 @@ CallNative unk_0x27A244D8 1 0
 iPush_0
 iPush_1
 CallNative unk_0x08F7AF78 2 1
+Return 0 0
+
+:Label_531_remove_ipl
+Function 30 0 2
+PushString "prologue01"
+CallNative remove_ipl 1 0
+PushString "prologue01c"
+CallNative remove_ipl 1 0
+PushString "prologue01d"
+CallNative remove_ipl 1 0
+PushString "prologue01e"
+CallNative remove_ipl 1 0
+PushString "prologue01f"
+CallNative remove_ipl 1 0
+PushString "prologue01g"
+CallNative remove_ipl 1 0
+PushString "prologue01h"
+CallNative remove_ipl 1 0
+PushString "prologue01i"
+CallNative remove_ipl 1 0
+PushString "prologue01j"
+CallNative remove_ipl 1 0
+PushString "prologue01k"
+CallNative remove_ipl 1 0
+PushString "prologue01z"
+CallNative remove_ipl 1 0
+PushString "prologue02"
+CallNative remove_ipl 1 0
+PushString "prologue03"
+CallNative remove_ipl 1 0
+PushString "prologue03b"
+CallNative remove_ipl 1 0
+PushString "prologue04"
+CallNative remove_ipl 1 0
+PushString "prologue04b"
+CallNative remove_ipl 1 0
+PushString "prologue05"
+CallNative remove_ipl 1 0
+PushString "prologue05b"
+CallNative remove_ipl 1 0
+PushString "prologue06"
+CallNative remove_ipl 1 0
+PushString "prologue06b"
+CallNative remove_ipl 1 0
+PushString "prologuerd"
+CallNative remove_ipl 1 0
+PushString "prologuerdb"
+CallNative remove_ipl 1 0
+PushString "prologue_m2_door"
+CallNative remove_ipl 1 0
+PushString "prologue03_grv_cov"
+CallNative remove_ipl 1 0
+PushString "prologue03_grv_dug"
+CallNative remove_ipl 1 0
+PushString "prologue_grv_torch"
+CallNative remove_ipl 1 0
 Return 0 0
 
 :Label_catch_select_button_press
