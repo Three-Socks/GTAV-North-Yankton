@@ -553,6 +553,28 @@ Return 0 0
 :teleport_north_yankton
 Function 1 0 3
 
+iPush_0
+StaticSet1 6
+
+CallNative is_screen_faded_out 0 1
+Not
+JumpFalse @teleport_north_yankton_1
+PushS 2500
+CallNative do_screen_fade_out 1 0
+
+:teleport_north_yankton_while
+CallNative is_screen_faded_out 0 1
+Not
+JumpFalse @teleport_north_yankton_1
+iPush_0
+CallNative wait 1 0
+Jump @teleport_north_yankton_while
+
+:teleport_north_yankton_1
+fPush 3546.2700
+fPush -4672.902
+fPush 113.8323
+CallNative load_scene 3 0
 CallNative player_ped_id 0 1
 fPush 3546.2700
 fPush -4672.902
@@ -573,12 +595,17 @@ fPush_0.0
 Push 1065353216
 CallNative set_gameplay_cam_relative_pitch 2 0
 
-fPush 3546.2700
-fPush -4672.902
-fPush 113.8323
-CallNative load_scene 3 0
+PushS 1000
+CallNative wait 1 0
 
-:teleport_north_yankton_1
+CallNative is_screen_faded_out 0 1
+JumpFalse @teleport_north_yankton_2
+PushS 800
+CallNative do_screen_fade_in 1 0
+
+:teleport_north_yankton_2
+iPush_1
+StaticSet1 6
 Return 0 0
 
 :options_north_yankton
@@ -928,7 +955,7 @@ StaticSet1 5
 iPush_0
 iPush_0
 Call @Label_set_up_draw
-PushString "North Yankton r3"
+PushString "North Yankton r5"
 StaticGet1 3
 fPush 0.04444443
 Call @Label_draw_string
