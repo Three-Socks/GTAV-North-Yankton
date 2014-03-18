@@ -226,22 +226,6 @@ iPush_0
 CallNative set_player_wanted_level_now 2 0
 
 :Label_9537
-Push GetHash("asea2")
-iPush_1
-CallNative set_vehicle_model_is_suppressed 2 0
-Push GetHash("mesa2")
-iPush_1
-CallNative set_vehicle_model_is_suppressed 2 0
-Push GetHash("policeold1")
-iPush_1
-CallNative set_vehicle_model_is_suppressed 2 0
-Push GetHash("policeold2")
-iPush_1
-CallNative set_vehicle_model_is_suppressed 2 0
-Push GetHash("taxi")
-iPush_1
-CallNative set_vehicle_model_is_suppressed 2 0
-
 CallNative clear_weather_type_persist 0 0
 PushString "SNOWLIGHT"
 CallNative set_weather_type_now_persist 1 0
@@ -275,6 +259,7 @@ CallNative unk_0x27A244D8 1 0
 iPush_0
 iPush_1
 CallNative unk_0x08F7AF78 2 1
+drop
 
 Jump @load_north_yankton_end
 
@@ -286,6 +271,7 @@ CallNative unk_0x27A244D8 1 0
 iPush_0
 iPush_1
 CallNative unk_0x08F7AF78 2 1
+drop
 
 :load_north_yankton_end
 Return 0 0
@@ -446,18 +432,6 @@ iPush_1
 CallNative set_create_random_cops 1 0
 fPush_1.0
 CallNative set_wanted_level_multiplier 1 0
-Push GetHash("asea2")
-iPush_0
-CallNative set_vehicle_model_is_suppressed 2 0
-Push GetHash("mesa2")
-iPush_0
-CallNative set_vehicle_model_is_suppressed 2 0
-Push GetHash("taxi")
-iPush_0
-CallNative set_vehicle_model_is_suppressed 2 0
-
-PushString "EXTRASUNNY"
-CallNative set_weather_type_now_persist 1 0
 CallNative clear_weather_type_persist 0 0
 CallNative unk_0x2D7787BC 0 0
 
@@ -492,6 +466,7 @@ CallNative unk_0x27A244D8 1 0
 iPush_0
 iPush_1
 CallNative unk_0x08F7AF78 2 1
+drop
 Return 0 0
 
 :Label_531_remove_ipl
@@ -559,7 +534,7 @@ StaticSet1 6
 CallNative is_screen_faded_out 0 1
 Not
 JumpFalse @teleport_north_yankton_1
-PushS 2500
+PushS 800
 CallNative do_screen_fade_out 1 0
 
 :teleport_north_yankton_while
@@ -595,7 +570,7 @@ fPush_0.0
 Push 1065353216
 CallNative set_gameplay_cam_relative_pitch 2 0
 
-PushS 1000
+PushS 2000
 CallNative wait 1 0
 
 CallNative is_screen_faded_out 0 1
@@ -955,7 +930,7 @@ StaticSet1 5
 iPush_0
 iPush_0
 Call @Label_set_up_draw
-PushString "North Yankton r5"
+PushString "North Yankton r6"
 StaticGet1 3
 fPush 0.04444443
 Call @Label_draw_string
