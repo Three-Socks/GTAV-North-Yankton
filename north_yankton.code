@@ -5,7 +5,7 @@ fPush 0.0453125
 StaticSet1 3
 iPush_0
 StaticSet1 4
-iPush_0
+iPush_-1
 StaticSet1 5
 iPush_0
 StaticSet1 6
@@ -16,30 +16,30 @@ StaticSet1 8
 
 iPush_0
 StaticSet1 9
-iPush_0
+
+PushString ""
 StaticSet1 10
 
 iPush_0
 StaticSet1 11
-
-PushString "NULL"
-StaticSet1 14
 
 :while
 iPush_1
 JumpFalse @Label_main3
 iPush_0
 CallNative wait 1 0
-Call @Label_catch_load_button_press
+Call @catch_load_button_press
 
 :Label_main1
 StaticGet1 6
 JumpFalse @Label_main2
-Call @Label_draw_window
-Call @Label_draw_menu
-Call @Label_catch_updown_button_press
-Call @Label_catch_select_button_press
-Call @Label_action
+Call @menu_set
+Call @draw_window
+Call @draw_frontend
+Call @draw_menu
+Call @catch_updown_button_press
+Call @catch_select_button_press
+Call @menu_action
 
 :Label_main2
 Jump @while
@@ -47,55 +47,85 @@ Jump @while
 :Label_main3
 Return 0 0
 
-:Label_action
-Function 12 0 2
-StaticGet1 7
-iPush_1
-JumpEq @Label_action1
-Jump @Label_action4
+:north_yankton_level_0
+Function 1 0 4
 
-:Label_action1
-
-iPush_0
-StaticSet1 7
+PushString "North Yankton"
+StaticSet1 10
 
 StaticGet1 9
-Switch [0 @Label_action_switch_1]:[1 @Label_action_switch_2]
-Jump @Label_action_switch_22
+Switch [0 @Label_level_0]:[1 @Label_level_1]
+Jump @Label_level_end
 
-:Label_action_switch_1
-StaticGet1 4
-Call @Label_north_yankton
-Jump @Label_action_switch_22
+:Label_level_0
+PushString "Load"
+Call @menu_addItem
+Call @menu_addItem_action
 
-:Label_action_switch_2
-StaticGet1 4
-Call @options_north_yankton
-Jump @Label_action_switch_22
+PushString "Unload"
+Call @menu_addItem
+Call @menu_addItem_action
 
-:Label_action_switch_22
-Jump @Label_action2
+PushString "Teleport"
+Call @menu_addItem
+Call @menu_addItem_action
 
-:Label_action4
-StaticGet1 7
-iPush_2
-JumpEq @Label_action5
-Jump @Label_action2
-
-:Label_action5
-iPush_0
-StaticSet1 7
-Call @Label_hide_menu
-Jump @Label_action2
-
-:Label_action2
+PushString "Options"
+Call @menu_addItem
 Return 0 0
 
-:Label_north_yankton
+:Label_level_1
+Call @north_yankton_level_1
+Return 0 0
+
+:Label_level_end
+Return 0 0
+
+:north_yankton_level_1
+Function 1 0 4
+
+iPush_0
+pstatic2 30
+aGet 1
+Switch [3 @Label_last_selected_3]
+Jump @Label_level_1_end
+
+:Label_last_selected_3
+PushString "Day"
+Call @menu_addItem
+Call @menu_addItem_action
+
+PushString "Night"
+Call @menu_addItem
+Call @menu_addItem_action
+
+PushString "Light Snow"
+Call @menu_addItem
+Call @menu_addItem_action
+
+PushString "Normal Snow"
+Call @menu_addItem
+Call @menu_addItem_action
+
+PushString "Heavy Snow"
+Call @menu_addItem
+Call @menu_addItem_action
+Return 0 0
+
+:Label_level_1_end
+Return 0 0
+
+:draw_frontend_hook
+Function 1 0 5
+
+:Label_draw_frontend_hook_end
+Return 0 0
+
+:north_yankton
 Function 14 1 3
 
 getF 0
-Switch [0 @Label_north_yankton_1]:[1 @Label_north_yankton_2]:[2 @Label_north_yankton_3]:[4 @Label_north_yankton_5]
+Switch [0 @Label_north_yankton_1]:[1 @Label_north_yankton_2]:[2 @Label_north_yankton_3]
 Jump @Label_north_yankton_22
 
 :Label_north_yankton_1
@@ -108,10 +138,6 @@ Jump @Label_north_yankton_22
 
 :Label_north_yankton_3
 Call @teleport_north_yankton
-Jump @Label_north_yankton_22
-
-:Label_north_yankton_5
-Call @Label_hide_menu
 Jump @Label_north_yankton_22
 
 :Label_north_yankton_22
@@ -587,7 +613,7 @@ Return 0 0
 Function 1 1 3
 
 getF 0
-Switch [0 @options_north_yankton_1]:[1 @options_north_yankton_2]:[2 @options_north_yankton_3]:[3 @options_north_yankton_4]:[4 @options_north_yankton_5]:[5 @options_north_yankton_6]
+Switch [0 @options_north_yankton_1]:[1 @options_north_yankton_2]:[2 @options_north_yankton_3]:[3 @options_north_yankton_4]:[4 @options_north_yankton_5]
 Jump @options_north_yankton_22
 
 :options_north_yankton_1
@@ -634,19 +660,121 @@ iPush_0
 CallNative unk_0xED88FC61 2 0
 Jump @options_north_yankton_22
 
-:options_north_yankton_6
-iPush_0
-StaticSet1 9
-StaticGet1 10
-StaticSet1 4
-iPush_0
-StaticSet1 10
-Jump @options_north_yankton_22
-
 :options_north_yankton_22
 Return 1 0
 
-:Label_catch_select_button_press
+:menu_set
+Function 1 0 4
+
+StaticGet1 11
+Not
+JumpFalse @Label_menu_set_end
+
+Call @north_yankton_level_0
+
+iPush_1
+StaticSet1 11
+
+:Label_menu_set_end
+Return 0 0
+
+:menu_action
+Function 12 0 2
+StaticGet1 7
+iPush_1
+JumpEq @Label_action1
+Jump @Label_action4
+
+:Label_action1
+iPush_0
+StaticSet1 7
+
+StaticGet1 9
+Switch [0 @Label_action_switch_1]:[1 @Label_action_switch_2]
+Jump @Label_action_switch_22
+
+:Label_action_switch_1
+StaticGet1 4
+Call @north_yankton
+Jump @Label_action_switch_22
+
+:Label_action_switch_2
+StaticGet1 4
+Call @options_north_yankton
+Jump @Label_action_switch_22
+
+:Label_action_switch_22
+Jump @Label_action2
+
+:Label_action4
+StaticGet1 7
+iPush_2
+JumpEq @Label_action5
+Jump @Label_action6
+
+:Label_action5
+iPush_0
+StaticSet1 7
+Call @menu_hide
+Jump @Label_action2
+
+:Label_action6
+StaticGet1 7
+iPush_3
+JumpEq @Label_action7
+Jump @Label_action2
+
+:Label_action7
+iPush_0
+StaticSet1 7
+Jump @Label_action2
+
+:Label_action2
+Return 0 0
+
+:menu_addItem
+Function 1 1 4
+
+StaticGet1 5
+Add1 1
+StaticSet1 5
+
+getF 0
+StaticGet1 5
+pstatic1 72
+aSet 1
+
+:Label_menu_addItem_end
+Return 1 0
+
+:menu_addItem_bool
+Function 1 1 4
+
+iPush_3
+StaticGet1 5
+pstatic1 123
+aSet 1
+
+getF 0
+StaticGet1 5
+pstatic1 174
+aSet 1
+
+:Label_menu_addItem_bool_end
+Return 1 0
+
+:menu_addItem_action
+Function 1 0 4
+
+iPush_1
+StaticGet1 5
+pstatic2 225
+aSet 1
+
+:Label_menu_addItem_action_end
+Return 0 0
+
+:catch_select_button_press
 Function 11 0 2
 iPush_0
 CallNative set_cinematic_button_active 1 0
@@ -669,6 +797,19 @@ iPush_2
 Push1 175
 CallNative unk_0x4E8E29E6 2 0
 iPush_2
+Push1 176
+CallNative is_control_just_released 2 1
+JumpFalse @Label_740
+iPush_-1
+PushString "SELECT"
+PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
+CallNative play_sound_frontend 3 0
+iPush_3
+StaticSet1 7
+Jump @Label_739
+
+:Label_740
+iPush_2
 Push1 174
 CallNative is_control_just_released 2 1
 JumpFalse @Label_741
@@ -678,17 +819,27 @@ PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
 
 iPush_1
-StaticGet1 9
+StaticGet1 4
+pstatic2 225
+aGet 1
 JumpEq @Label_catch_select_button_press_2
-iPush_3
+
+iPush_0
+StaticSet1 11
+
 StaticGet1 4
-JumpNE @Label_catch_select_button_press_2
-iPush_1
-StaticSet1 9
-StaticGet1 4
-StaticSet1 10
+StaticGet1 9
+pstatic2 30
+aSet 1
+
 iPush_0
 StaticSet1 4
+
+Call @menu_clean
+
+StaticGet1 9
+Add1 1
+StaticSet1 9
 Jump @Label_739
 
 :Label_catch_select_button_press_2
@@ -709,12 +860,23 @@ CallNative play_sound_frontend 3 0
 iPush_0
 StaticGet1 9
 JumpEq @Label_catch_select_button_press_3
+
 iPush_0
-StaticSet1 9
-StaticGet1 10
+StaticSet1 11
+
+Call @menu_clean
+
+StaticGet1 9
+iPush_1
+Sub
+pstatic2 30
+aGet 1
 StaticSet1 4
-iPush_0
-StaticSet1 10
+
+StaticGet1 9
+iPush_1
+Sub
+StaticSet1 9
 Jump @Label_739
 
 :Label_catch_select_button_press_3
@@ -724,7 +886,7 @@ StaticSet1 7
 :Label_739
 Return 0 0
 
-:Label_catch_load_button_press
+:catch_load_button_press
 Function 8 0 3
 StaticGet1 8
 Push1 25
@@ -736,7 +898,7 @@ StaticGet1 6
 JumpFalse @Label_catch_load2
 iPush_0
 StaticSet1 8
-Call @Label_hide_menu
+Call @menu_hide
 iPush_-1
 PushString "SELECT"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
@@ -748,6 +910,9 @@ iPush_0
 StaticSet1 8
 iPush_1
 StaticSet1 6
+iPush_0
+StaticSet1 11
+Call @menu_clean
 iPush_-1
 PushString "SELECT"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
@@ -755,18 +920,66 @@ CallNative play_sound_frontend 3 0
 Jump @Label_catch_load4
 
 :Label_catch_load4
-Call @Label_load_pressed
+Call @load_pressed
 Return 0 0
 
-:Label_hide_menu
-Function 61 0 2
+:menu_hide
+Function 60 0 2
+iPush_0
+StaticSet1 13
+pstatic1 12
+CallNative set_scaleform_movie_as_no_longer_needed 1 0
 iPush_1
 CallNative set_cinematic_button_active 1 0
 iPush_0
 StaticSet1 6
 Return 0 0
 
-:Label_load_pressed
+:menu_clean
+Function 1 0 5
+
+iPush_0
+setF 3
+
+StaticGet1 5
+Add1 1
+setF 4
+
+:Label_menu_clean_LOOP
+getF 3
+getF 4
+JumpGE @Label_menu_clean_END
+PushString ""
+getF 3
+pstatic1 72
+aSet 1
+
+iPush_0
+getF 3
+pstatic1 123
+aSet 1
+
+iPush_0
+getF 3
+pstatic1 174
+aSet 1
+
+iPush_0
+getF 3
+pstatic2 225
+aSet 1
+
+getF 3
+Add1 1
+setF 3
+Jump @Label_menu_clean_LOOP
+
+:Label_menu_clean_END
+iPush_-1
+StaticSet1 5
+Return 0 0
+
+:load_pressed
 Function 10 0 2
 CallNative is_pause_menu_active 0 1
 JumpFalse @Label_load_pressed_1
@@ -774,14 +987,9 @@ Jump @Label_load_pressed_2
 
 :Label_load_pressed_1
 iPush_2
-Push1 179
+Push1 184
 CallNative is_control_pressed 2 1
 JumpFalse @Label_load_pressed_2
-iPush_2
-Push1 183
-CallNative is_control_pressed 2 1
-JumpFalse @Label_load_pressed_2
-
 StaticGet1 8
 Add1 1
 StaticSet1 8
@@ -794,7 +1002,7 @@ StaticSet1 8
 :Label_load_pressed_3
 Return 0 0
 
-:Label_draw_window
+:draw_window
 Function 7 0 9
 Push1 140
 pFrame1 2
@@ -820,7 +1028,7 @@ getF 2
 getF 3
 getF 4
 getF 5
-Call @Label_draw_rect
+Call @draw_rect
 fPush 0.040625
 fPush 0.040277
 fPush 0.225
@@ -829,10 +1037,10 @@ iPush_0
 iPush_0
 iPush_0
 Push1 204
-Call @Label_draw_rect
+Call @draw_rect
 Return 0 0
 
-:Label_draw_rect
+:draw_rect
 Function 6 8 10
 getF 0
 getF 2
@@ -853,7 +1061,115 @@ getF 7
 CallNative draw_rect 8 0
 Return 8 0
 
-:Label_catch_updown_button_press
+:draw_frontend
+Function 1 0 4
+
+StaticGet1 12
+CallNative has_scaleform_movie_loaded 1 1
+JumpFalse @Label_draw_frontend_not_loaded
+StaticGet1 13
+JumpFalse @Label_draw_frontend_loaded
+StaticGet1 12
+PushString "CLEAR_ALL"
+CallNative unk_0x215ABBE8 2 1
+drop
+CallNative unk_0x02DBF2D7 0 0
+
+StaticGet1 12
+PushString "SET_MAX_WIDTH"
+CallNative unk_0x215ABBE8 2 1
+drop
+fPush 100
+CallNative unk_0x9A01FFDA 1 0
+CallNative unk_0x02DBF2D7 0 0
+
+StaticGet1 12
+PushString "SET_DATA_SLOT"
+CallNative unk_0x215ABBE8 2 1
+drop
+iPush_0
+CallNative unk_0x716777CB 1 0
+Push1 30
+CallNative unk_0x716777CB 1 0
+
+PushString "ITEM_SELECT"
+CallNative clear_player_has_2_characters_enable 1 0
+
+iPush_-1
+CallNative unk_0xFE272A57 1 0
+CallNative unk_0x386CE0B8 0 0
+CallNative unk_0x02DBF2D7 0 0
+
+StaticGet1 12
+PushString "SET_DATA_SLOT"
+CallNative unk_0x215ABBE8 2 1
+drop
+iPush_1
+CallNative unk_0x716777CB 1 0
+Push1 31
+CallNative unk_0x716777CB 1 0
+
+iPush_0
+StaticGet1 9
+JumpEq @Label_draw_frontend_exit
+
+PushString "ITEM_BACK"
+CallNative clear_player_has_2_characters_enable 1 0
+Jump @Label_draw_frontend_back
+
+:Label_draw_frontend_exit
+PushString "ITEM_EXIT"
+CallNative clear_player_has_2_characters_enable 1 0
+
+:Label_draw_frontend_back
+iPush_-1
+CallNative unk_0xFE272A57 1 0
+CallNative unk_0x386CE0B8 0 0
+CallNative unk_0x02DBF2D7 0 0
+
+Call @draw_frontend_hook
+
+StaticGet1 12
+PushString "SET_BACKGROUND_COLOUR"
+CallNative unk_0x215ABBE8 2 1
+drop
+iPush_0
+CallNative unk_0x716777CB 1 0
+iPush_0
+CallNative unk_0x716777CB 1 0
+iPush_0
+CallNative unk_0x716777CB 1 0
+Push1 80
+CallNative unk_0x716777CB 1 0
+CallNative unk_0x02DBF2D7 0 0
+
+StaticGet1 12
+PushString "DRAW_INSTRUCTIONAL_BUTTONS"
+CallNative unk_0x215ABBE8 2 1
+drop
+iPush_0
+CallNative unk_0x716777CB 1 0
+CallNative unk_0x02DBF2D7 0 0
+
+StaticGet1 12
+Push3 255, 255, 255
+Push1 255
+CallNative unk_0x7B48E696 5 0
+
+:Label_draw_frontend_loaded
+Jump @Label_draw_frontend_end
+
+:Label_draw_frontend_not_loaded
+PushString "instructional_buttons"
+CallNative request_scaleform_movie 1 1
+StaticSet1 12
+iPush_1
+StaticSet1 13
+
+:Label_draw_frontend_end
+Return 0 0
+
+:catch_updown_button_press
 Function 8 0 6
 iPush_0
 Push1 46
@@ -867,6 +1183,9 @@ CallNative unk_0x4E8E29E6 2 0
 iPush_2
 Push1 174
 CallNative unk_0x4E8E29E6 2 0
+StaticGet1 5
+setF 3
+
 iPush_2
 Push1 161
 CallNative is_control_just_pressed 2 1
@@ -876,7 +1195,7 @@ PushString "NAV_UP_DOWN"
 PushString "HUD_FRONTEND_DEFAULT_SOUNDSET"
 CallNative play_sound_frontend 3 0
 StaticGet1 4
-StaticGet1 5
+getF 3
 JumpGE @Label_1341
 StaticGet1 4
 Add1 1
@@ -909,7 +1228,7 @@ StaticSet1 4
 Jump @Label_1346
 
 :Label_1345
-StaticGet1 5
+getF 3
 StaticSet1 4
 
 :Label_1344
@@ -921,19 +1240,8 @@ Jump @Label_catch_updown_button_press_END
 :Label_catch_updown_button_press_END
 Return 0 0
 
-:Label_draw_menu
-Function 5 0 12
-
-Call @Label_get_menu_count
-StaticSet1 5
-
-iPush_0
-iPush_0
-Call @Label_set_up_draw
-PushString "North Yankton r6"
-StaticGet1 3
-fPush 0.04444443
-Call @Label_draw_string
+:draw_menu
+Function 5 0 22
 
 iPush_0
 setF 3
@@ -957,13 +1265,52 @@ StaticGet1 5
 Add1 1
 setF 9
 
-iPush_0
+PushString "Disabled"
 setF 10
+
+PushString "Enabled"
+setF 11
+
+Push1 255
+setF 12
+
+Push1 255
+setF 13
+
+Push1 255
+setF 14
+
+iPush_0
+setF 15
+
+iPush_0
+setF 16
+
+iPush_0
+setF 17
+
+getF 12
+getF 13
+getF 14
+iPush_0
+Call @set_up_draw
+StaticGet1 10
+StaticGet1 3
+fPush 0.04444443
+Call @draw_string
 
 :Label_draw_menu_LOOP
 getF 3
 getF 9
 JumpGE @Label_draw_menu_END
+
+getF 12
+setF 18
+getF 13
+setF 19
+getF 14
+setF 20
+
 getF 5
 getF 8
 fAdd
@@ -976,12 +1323,7 @@ setF 7
 :Label_draw_menu_1
 getF 3
 StaticGet1 4
-JumpEq @Label_draw_menu_2
-iPush_0
-setF 10
-Jump @Label_draw_menu_3
-
-:Label_draw_menu_2
+JumpNE @Label_draw_menu_2
 fPush 0.040625
 getF 7
 fPush 0.225
@@ -990,20 +1332,55 @@ Push1 240
 Push1 240
 Push1 240
 Push1 255
-Call @Label_draw_rect
-iPush_1
-setF 10
+Call @draw_rect
+getF 15
+setF 18
+getF 16
+setF 19
+getF 17
+setF 20
 
-:Label_draw_menu_3
-getF 10
+:Label_draw_menu_2
+getF 18
+getF 19
+getF 20
 iPush_0
-Call @Label_set_up_draw
+Call @set_up_draw
 getF 3
-Call @Label_get_menu
+pstatic1 72
+aGet 1
 StaticGet1 3
 getF 5
-Call @Label_draw_string
+Call @draw_string
+iPush_3
+getF 3
+pstatic1 123
+aGet 1
+JumpNE @Label_draw_menu_bool_end
+getF 18
+getF 19
+getF 20
+iPush_1
+Call @set_up_draw
 
+getF 3
+pstatic1 174
+aGet 1
+Not
+JumpFalse @Label_draw_menu_bool_true
+getF 10
+fPush_0.0
+getF 5
+Call @draw_string
+Jump @Label_draw_menu_bool_end
+
+:Label_draw_menu_bool_true
+getF 11
+fPush_0.0
+getF 5
+Call @draw_string
+
+:Label_draw_menu_bool_end
 getF 3
 Add1 1
 setF 3
@@ -1012,8 +1389,8 @@ Jump @Label_draw_menu_LOOP
 :Label_draw_menu_END
 Return 0 0
 
-:Label_draw_string
-Function 25 3 3
+:draw_string
+Function 4 3 3
 PushString "STRING"
 CallNative unk_0x3E35563E 1 0
 getF 0
@@ -1023,29 +1400,21 @@ getF 2
 CallNative unk_0x6F8350CE 2 0
 Return 3 0
 
-:Label_set_up_draw
-Function 1 2 3
+:set_up_draw
+Function 1 4 6
 iPush_0
 CallNative set_text_font 1 0
 fPush_0.0
 fPush 0.35
 CallNative set_text_scale 2 0
 
-:Label_set_up_draw3
 getF 0
-JumpFalse @Label_set_up_draw_2
-Push3 0, 0, 0
-Push1 255
-CallNative set_text_colour 4 0
-Jump @Label_set_up_draw_1
-
-:Label_set_up_draw_2
-Push3 255, 255, 255
-Push1 255
-CallNative set_text_colour 4 0
-
-:Label_set_up_draw_1
 getF 1
+getF 2
+Push1 255
+CallNative set_text_colour 4 0
+
+getF 3
 JumpFalse @Label_set_up_draw_4
 fPush_0.0
 StaticGet1 3
@@ -1079,106 +1448,4 @@ iPush_0
 iPush_0
 iPush_0
 CallNative set_text_edge 5 0
-Return 2 0
-
-:Label_get_menu_count
-Function 21 0 3
-StaticGet1 9
-Switch [0 @Label_get_menu_count_1]:[1 @Label_get_menu_count_2]
-Jump @Label_get_menu_count_6
-
-:Label_get_menu_count_1
-Push1 4
-Return 0 1
-
-:Label_get_menu_count_2
-Push1 5
-Return 0 1
-
-:Label_get_menu_count_6
-iPush_0
-Return 0 1
-
-:Label_get_menu
-Function 19 1 3
-StaticGet1 9
-Switch [0 @Label_get_menu_1]:[1 @Label_get_menu_2]
-Jump @Label_get_menu_6
-
-:Label_get_menu_1
-getF 0
-Call @Label_get_menu_main
-Return 1 1
-
-:Label_get_menu_2
-getF 0
-Call @Label_get_menu_options
-Return 1 1
-
-:Label_get_menu_6
-PushString ""
-Return 1 1
-
-:Label_get_menu_main
-Function 20 1 3
-getF 0
-Switch [0 @Label_get_menu_main_1]:[1 @Label_get_menu_main_2]:[2 @Label_get_menu_main_3]:[3 @Label_get_menu_main_4]:[4 @Label_get_menu_main_5]
-Jump @Label_get_menu_main_22
-
-:Label_get_menu_main_1
-PushString "Load"
-Return 1 1
-
-:Label_get_menu_main_2
-PushString "Unload"
-Return 1 1
-
-:Label_get_menu_main_3
-PushString "Teleport"
-Return 1 1
-
-:Label_get_menu_main_4
-PushString "Options"
-Return 1 1
-
-:Label_get_menu_main_5
-PushString "Exit"
-Return 1 1
-
-:Label_get_menu_main_22
-PushString ""
-Return 1 1
-
-:Label_get_menu_options
-Function 20 1 3
-getF 0
-Switch [0 @Label_get_menu_options_1]:[1 @Label_get_menu_options_2]:[2 @Label_get_menu_options_3]:[3 @Label_get_menu_options_4]:[4 @Label_get_menu_options_5]:[5 @Label_get_menu_options_6]
-Jump @Label_get_menu_options_22
-
-:Label_get_menu_options_1
-PushString "Day"
-Return 1 1
-
-:Label_get_menu_options_2
-PushString "Night"
-Return 1 1
-
-:Label_get_menu_options_3
-PushString "Light Snow"
-Return 1 1
-
-:Label_get_menu_options_4
-PushString "Normal Snow"
-Return 1 1
-
-:Label_get_menu_options_5
-PushString "Heavy Snow"
-Return 1 1
-
-:Label_get_menu_options_6
-PushString "Back"
-Return 1 1
-
-:Label_get_menu_options_22
-PushString ""
-Return 1 1
+Return 4 0
