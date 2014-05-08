@@ -277,24 +277,6 @@ CallNative unk_0x0B710A51 2 0
 iPush_5
 iPush_0
 CallNative unk_0x0B710A51 2 0
-iPush_0
-CallNative set_max_wanted_level 1 0
-iPush_0
-CallNative set_create_random_cops 1 0
-fPush_0.0
-CallNative set_wanted_level_multiplier 1 0
-CallNative player_id 0 1
-CallNative is_player_playing 1 1
-JumpFalse @Label_9537
-CallNative player_id 0 1
-iPush_0
-iPush_0
-CallNative set_player_wanted_level 3 0
-CallNative player_id 0 1
-iPush_0
-CallNative set_player_wanted_level_now 2 0
-
-:Label_9537
 CallNative clear_weather_type_persist 0 0
 PushString "SNOWLIGHT"
 CallNative set_weather_type_now_persist 1 0
@@ -483,12 +465,6 @@ CallNative unk_0x0B710A51 2 0
 iPush_5
 iPush_1
 CallNative unk_0x0B710A51 2 0
-iPush_5
-CallNative set_max_wanted_level 1 0
-iPush_1
-CallNative set_create_random_cops 1 0
-fPush_1.0
-CallNative set_wanted_level_multiplier 1 0
 CallNative clear_weather_type_persist 0 0
 CallNative unk_0x2D7787BC 0 0
 
