@@ -2281,7 +2281,7 @@ Return 0 0
 Function 1 0 4
 iPush_2
 Push1 174
-CallNative is_disabled_control_just_released 2 1
+CallNative is_disabled_control_just_pressed 2 1
 JumpFalse @Label_741
 StaticGet1 17
 iPush_2
@@ -2325,7 +2325,7 @@ Jump @Label_catch_select_button_press_end
 :Label_741
 iPush_2
 Push1 175
-CallNative is_disabled_control_just_released 2 1
+CallNative is_disabled_control_just_pressed 2 1
 JumpFalse @Label_catch_select_button_press_square
 
 iPush_0
@@ -2362,7 +2362,7 @@ Jump @Label_catch_select_button_press_end
 :Label_catch_select_button_press_square
 iPush_2
 Push1 176
-CallNative is_disabled_control_just_released 2 1
+CallNative is_disabled_control_just_pressed 2 1
 JumpFalse @Label_catch_select_button_press_end
 
 iPush_3
@@ -2663,6 +2663,7 @@ PushString "CommonMenu"
 CallNative set_streamed_texture_dict_as_no_longer_needed 1 0
 iPush_0
 Call @menu_set_open_state
+CallNative terminate_this_thread 0 0
 
 :menu_hide_end
 Return 0 0
