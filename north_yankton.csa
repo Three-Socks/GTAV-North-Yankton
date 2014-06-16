@@ -31,7 +31,7 @@ StaticGet1 7
 JumpNE @Label_main_draw
 iPush_2
 Push1 175
-CallNative is_disabled_control_just_released 2 1
+CallNative is_disabled_control_just_pressed 2 1
 JumpFalse @Label_main_draw
 Call @menu_set_last_selected
 
@@ -556,7 +556,7 @@ CallNative remove_ipl 1 0
 Return 0 0
 
 :teleport_north_yankton
-Function 1 0 3
+Function 1 0 4
 
 iPush_0
 Call @menu_set_open_state
@@ -581,6 +581,36 @@ fPush -4672.902
 fPush 113.8323
 CallNative load_scene 3 0
 CallNative player_ped_id 0 1
+iPush_0
+CallNative is_ped_in_any_vehicle 2 1
+JumpFalse @Label_ny_teleport_not_in_veh
+CallNative player_ped_id 0 1
+iPush_0
+CallNative get_vehicle_ped_is_in 2 1
+setF 3
+
+getF 3
+CallNative does_entity_exist 1 1
+JumpFalse @Label_ny_teleport_goto_3
+getF 3
+fPush 3546.2700
+fPush -4672.902
+fPush 113.8323
+iPush_1
+iPush_0
+iPush_0
+iPush_1
+CallNative set_entity_coords 8 0
+
+getF 3
+fPush 172.5381
+CallNative set_entity_heading 2 0
+
+:Label_ny_teleport_goto_3
+Jump @Label_ny_teleport_3
+
+:Label_ny_teleport_not_in_veh
+CallNative player_ped_id 0 1
 fPush 3546.2700
 fPush -4672.902
 fPush 113.8323
@@ -594,6 +624,7 @@ CallNative player_ped_id 0 1
 fPush 172.5381
 CallNative set_entity_heading 2 0
 
+:Label_ny_teleport_3
 fPush_0.0
 CallNative set_gameplay_cam_relative_heading 1 0
 fPush_0.0
