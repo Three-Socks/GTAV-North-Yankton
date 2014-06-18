@@ -192,7 +192,7 @@ Return 0 0
 :load_north_yankton
 Function 1 0 5
 
-StaticGet2 276
+StaticGet2 378
 Not
 JumpFalse @load_north_yankton_error
 
@@ -304,7 +304,7 @@ CallNative set_ambient_zone_list_state 3 0
 Call @teleport_north_yankton
 
 iPush_1
-StaticSet2 276
+StaticSet2 378
 
 PushString "North Yankton loaded!"
 Call @menu_msg
@@ -494,7 +494,7 @@ iPush_1
 CallNative set_ambient_zone_list_state 3 0
 
 iPush_0
-StaticSet2 276
+StaticSet2 378
 PushString "North Yankton unloaded!"
 Call @menu_msg
 Return 0 0
