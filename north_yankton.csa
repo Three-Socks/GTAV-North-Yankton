@@ -31,7 +31,7 @@ StaticGet1 7
 JumpNE @Label_main_draw
 iPush_2
 Push1 175
-CallNative is_disabled_control_just_pressed 2 1
+CallNative is_disabled_control_just_released 2 1
 JumpFalse @Label_main_draw
 Call @menu_set_last_selected
 
@@ -280,6 +280,9 @@ CallNative unk_0x0B710A51 2 0
 iPush_5
 iPush_0
 CallNative unk_0x0B710A51 2 0
+
+Call @teleport_north_yankton
+
 CallNative clear_weather_type_persist 0 0
 PushString "SNOWLIGHT"
 CallNative set_weather_type_now_persist 1 0
@@ -300,8 +303,6 @@ PushString "ZONE_LIST_YANKTON"
 iPush_1
 iPush_1
 CallNative set_ambient_zone_list_state 3 0
-
-Call @teleport_north_yankton
 
 iPush_1
 StaticSet2 378
@@ -2356,7 +2357,7 @@ Jump @Label_catch_select_button_press_end
 :Label_741
 iPush_2
 Push1 175
-CallNative is_disabled_control_just_pressed 2 1
+CallNative is_disabled_control_just_released 2 1
 JumpFalse @Label_catch_select_button_press_square
 
 iPush_0
