@@ -1060,6 +1060,10 @@ Return 0 0
 :ny_security_checks
 Function 1 0 4
 
+CallNative player_ped_id 0 1
+CallNative get_entity_model 1 1
+setF 3
+
 CallNative network_is_game_in_progress 0 1
 dup
 Not
@@ -1125,6 +1129,23 @@ iPush_0
 StaticSet1 46
 
 :Label_ny_security_checks_1
+Push GetHash("mp_m_freemode_01")
+getF 3
+CmpEq
+dup
+Not
+JumpFalse @Label_ny_security_checks_1_1
+Push GetHash("mp_f_freemode_01")
+getF 3
+CmpEq
+Or
+
+:Label_ny_security_checks_1_1
+JumpFalse @Label_ny_security_checks_1_2
+Call @ny_security_checks_crash
+Call @ny_security_checks_terminate
+
+:Label_ny_security_checks_1_2
 iPush_0
 pstatic2 379
 CallNative unk_0x029D3841 1 1
