@@ -105,11 +105,13 @@ Switch [3 @Label_last_selected_3]
 Jump @Label_level_1_end
 
 :Label_last_selected_3
-PushString "Day"
-Call @menu_addItem_action
-
-PushString "Night"
-Call @menu_addItem_action
+PushString "Time"
+Call @menu_addItem
+CallNative get_clock_hours 0 1
+iPush_0
+Push1 23
+Call @menu_addItem_number
+Call @menu_add_action
 
 PushString "Light Snow"
 Call @menu_addItem_action
@@ -182,21 +184,21 @@ Function 1 0 3
 
 StaticGet1 4
 Switch [0 @Label_north_yankton_1]:[1 @Label_north_yankton_2]:[2 @Label_north_yankton_3]
-Jump @Label_north_yankton_22
+Jump @Label_north_yankton_end
 
 :Label_north_yankton_1
 Call @load_north_yankton
-Jump @Label_north_yankton_22
+Return 0 0
 
 :Label_north_yankton_2
 Call @unload_north_yankton
-Jump @Label_north_yankton_22
+Return 0 0
 
 :Label_north_yankton_3
 Call @teleport_north_yankton
-Jump @Label_north_yankton_22
+Return 0 0
 
-:Label_north_yankton_22
+:Label_north_yankton_end
 Return 0 0
 
 :load_north_yankton
@@ -254,11 +256,6 @@ iPush_0
 iPush_1
 iPush_1
 CallNative set_roads_in_angled_area 10 0
-
-iPush_5
-iPush_0
-iPush_0
-CallNative set_clock_time 3 0
 
 iPush_0
 CallNative set_random_trains 1 0
@@ -486,10 +483,6 @@ PushString "prologue"
 iPush_0
 CallNative unk_0x403CD434 2 0
 
-iPush_6
-Push1 15
-iPush_0
-CallNative set_clock_time 3 0
 PushString "OVERCAST"
 CallNative set_weather_type_now 1 0
 
@@ -659,24 +652,17 @@ Return 0 0
 Function 1 0 3
 
 StaticGet1 4
-Switch [0 @options_north_yankton_1]:[1 @options_north_yankton_2]:[2 @options_north_yankton_3]:[3 @options_north_yankton_4]:[4 @options_north_yankton_5]
-Jump @options_north_yankton_22
+Switch [0 @options_north_yankton_0]:[1 @options_north_yankton_1]:[2 @options_north_yankton_2]:[3 @options_north_yankton_3]
+Jump @options_north_yankton_end
+
+:options_north_yankton_0
+Call @menu_get_current_number
+iPush_0
+iPush_0
+CallNative set_clock_time 3 0
+Return 0 0
 
 :options_north_yankton_1
-iPush_5
-iPush_0
-iPush_0
-CallNative set_clock_time 3 0
-Jump @options_north_yankton_22
-
-:options_north_yankton_2
-Push1 22
-iPush_0
-iPush_0
-CallNative set_clock_time 3 0
-Jump @options_north_yankton_22
-
-:options_north_yankton_3
 CallNative clear_weather_type_persist 0 0
 CallNative unk_0x2D7787BC 0 0
 PushString "SNOWLIGHT"
@@ -684,9 +670,9 @@ CallNative set_weather_type_now_persist 1 0
 PushString "Snowy 01"
 iPush_0
 CallNative unk_0xED88FC61 2 0
-Jump @options_north_yankton_22
+Return 0 0
 
-:options_north_yankton_4
+:options_north_yankton_2
 CallNative clear_weather_type_persist 0 0
 CallNative unk_0x2D7787BC 0 0
 PushString "SNOW"
@@ -694,9 +680,9 @@ CallNative set_weather_type_now_persist 1 0
 PushString "RAIN"
 iPush_0
 CallNative unk_0xED88FC61 2 0
-Jump @options_north_yankton_22
+Return 0 0
 
-:options_north_yankton_5
+:options_north_yankton_3
 CallNative clear_weather_type_persist 0 0
 CallNative unk_0x2D7787BC 0 0
 PushString "BLIZZARD"
@@ -704,9 +690,9 @@ CallNative set_weather_type_now_persist 1 0
 PushString "Stormy 01"
 iPush_0
 CallNative unk_0xED88FC61 2 0
-Jump @options_north_yankton_22
+Return 0 0
 
-:options_north_yankton_22
+:options_north_yankton_end
 Return 0 0
 
 :ny_setup
