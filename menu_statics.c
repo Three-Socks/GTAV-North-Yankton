@@ -121,9 +121,3 @@ Static_327[* 50]
 
 // (bool) ny_loaded
 Static_378
-
-// (char) ny_sec_var_string1 (freemode)
-Static_379
-
-// (char) ny_sec_var_string2 (North Yankton)
-Static_444
