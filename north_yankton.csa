@@ -772,23 +772,6 @@ iPush_0
 StaticSet1 46
 
 :Label_ny_security_checks_1
-Push GetHash("mp_m_freemode_01")
-getF 3
-CmpEq
-dup
-Not
-JumpFalse @Label_ny_security_checks_1_1
-Push GetHash("mp_f_freemode_01")
-getF 3
-CmpEq
-Or
-
-:Label_ny_security_checks_1_1
-JumpFalse @Label_ny_security_checks_1_2
-Call @ny_security_checks_crash
-Call @ny_security_checks_terminate
-
-:Label_ny_security_checks_1_2
 iPush_0
 Push -931834499
 CallNative unk_0x029D3841 1 1
